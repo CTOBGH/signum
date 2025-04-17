@@ -1,0 +1,315 @@
+# Signum Content Labeling Standard
+
+**Current Version:** 1.0.0 (Draft)
+**Last Updated:** 2025-04-17
+
+---
+
+**Table of Contents**
+
+1.  [Introduction](#1-introduction)
+    1.1. [Purpose](#11-purpose)
+    1.2. [Scope](#12-scope)
+    1.3. [Goals & Non-Goals](#13-goals--non-goals)
+2.  [Core Definitions](#2-core-definitions)
+3.  [Signum Label Categories](#3-signum-label-categories)
+    3.1. [Overview](#31-overview)
+    3.2. [Level 0: Human (H)](#32-level-0-human-h)
+    3.3. [Level 1: Human, AI-Enhanced (H-AE)](#33-level-1-human-ai-enhanced-h-ae)
+    3.4. [Level 2: AI-Assisted, Human-Reviewed (AI-HR)](#34-level-2-ai-assisted-human-reviewed-ai-hr)
+    3.5. [Level 3: AI-Generated, Human-Prompted (AI-HP)](#35-level-3-ai-generated-human-prompted-ai-hp)
+    3.6. [Level 4: Fully Automated AI (AI-FA)](#36-level-4-fully-automated-ai-ai-fa)
+4.  [Applying Signum Labels](#4-applying-signum-labels)
+    4.1. [Principle of Primary Creation Method](#41-principle-of-primary-creation-method)
+    4.2. [Labeling Compound Content](#42-labeling-compound-content)
+    4.3. [Labeling Modified Content](#43-labeling-modified-content)
+5.  [Technical Specification: Metadata Embedding](#5-technical-specification-metadata-embedding)
+    5.1. [Core Metadata Fields](#51-core-metadata-fields)
+    5.2. [Implementation: HTML Meta Tags](#52-implementation-html-meta-tags)
+    5.3. [Implementation: JSON-LD](#53-implementation-json-ld)
+    5.4. [Future Considerations (File Metadata, C2PA)](#54-future-considerations-file-metadata-c2pa)
+6.  [Visual Representation](#6-visual-representation)
+    6.1. [Standard Codes](#61-standard-codes)
+    6.2. [Reference to Visual Assets & Style Guide](#62-reference-to-visual-assets--style-guide)
+    6.3. [Display Guidelines Summary](#63-display-guidelines-summary)
+7.  [Relationship to Other Standards & Policies](#7-relationship-to-other-standards--policies)
+    7.1. [C2PA (Content Credentials)](#71-c2pa-content-credentials)
+    7.2. [Platform-Specific Labeling](#72-platform-specific-labeling)
+8.  [Standard Evolution & Governance](#8-standard-evolution--governance)
+    8.1. [Versioning Scheme](#81-versioning-scheme)
+    8.2. [Proposal Process](#82-proposal-process)
+9.  [Appendices](#9-appendices)
+    9.1. [Appendix A: Detailed Examples & Edge Cases](#91-appendix-a-detailed-examples--edge-cases)
+    9.2. [Appendix B: Revision History](#92-appendix-b-revision-history)
+
+---
+
+## 1. Introduction
+
+### 1.1 Purpose
+* Signum's purpose is to easily allow content creators to label their content in a repeateable, standardised fashion, that is widely recognised across the internet by its users. Fostering trust, transparency, and consistency is crucial. 
+
+### 1.2 Scope
+
+The Signum Content Labeling Standard is designed to be broadly applicable across various forms of digital media where understanding the level of AI involvement in the creation process is relevant for transparency and trust. The standard can be applied voluntarily by creators or implemented by platforms and distributors.
+
+**Applicable Media Forms Include (but are not limited to):**
+
+* **Text:**
+    * Articles (News, Opinion, Informational)
+    * Blog Posts & Website Content
+    * Social Media Posts & Updates
+    * Creative Writing (Stories, Poems, Scripts)
+    * Code & Software Documentation
+    * Reports & Summaries
+    * Marketing & Advertising Copy
+    * Educational Materials
+
+* **Visual Media (Images & Video):**
+    * Static Images (Photographs, Illustrations, AI-Generated Art, Graphics)
+    * Short-Form Video (Social Media Clips, Reels, Stories)
+    * Long-Form Video (Documentaries, Films, Vlogs, Presentations)
+    * Animated Content
+    * User Interface Elements (if generated or significantly modified by AI)
+    * Advertisements
+
+* **Audio:**
+    * Podcasts & Spoken Word Content
+    * Audiobooks & Narrations
+    * Music & Sound Effects
+    * Voiceovers & Synthesized Speech (e.g., for accessibility, virtual assistants)
+    * Audio Tours & Guides
+
+**Explicit Exclusions:**
+
+While the standard aims for broad applicability, the following are generally considered out of scope for mandatory or typical Signum labeling:
+
+* **Private/Personal Communications:** Content intended primarily for direct, private communication between individuals (e.g., personal emails, direct messages/chats) where public transparency is not the primary concern.
+* **Ephemeral Content:** Highly transient content not intended for persistence or wide distribution where labeling is impractical (e.g., some real-time status indicators, temporary system messages). *Note: Caution advised, as misinformation can spread via seemingly ephemeral content.*
+* **Non-Consumable System Data:** Raw operational data, log files, intermediate computational results, or system outputs not intended as human-consumable content.
+* **Underlying Models/Algorithms:** Signum labels apply to the *output* content generated by AI, not the AI models or algorithms themselves.
+* **Pre-Existing Content:** Content created and published before the adoption or implementation of this standard (unless retrospectively labeled).
+
+The primary focus of the Signum standard is on content that is published, shared, or otherwise distributed in a context where understanding its provenance is beneficial for the audience or downstream systems.
+
+
+Okay, let's expand section 1.3 "Goals & Non-Goals" to provide more detail and clarity.
+Markdown
+
+### 1.3 Goals & Non-Goals
+
+Understanding the intended purpose and limitations of the Signum standard is crucial for its effective application and interpretation.
+
+**Goals of the Signum Standard:**
+
+* **Enhance Transparency:** To make the origin and primary creation method of content visible and understandable to end-users, platforms, and downstream systems. 
+
+* **Empower Users:**
+    * For **Users:** Provide a consistent indicator to help them critically evaluate the nature, and provence of content.
+    * For **Creators:** Offer a standardised way to transparently communicate the use of AI (or lack thereof), build trust with their audience, and represent work accurately.
+    * For **Platforms:** Supply a framework to build features that promote transparency, manage content responsibly, and foster more trustworthy user environments.
+
+* **Promote Consistency & Interoperability:** Establish a common lexicon and set of categories for describing AI usage, reducing confusion caused by ad-hoc or proprietary labeling methods across different platforms and content types.
+
+* **Support Responsible AI Innovation & Adoption:** Encourage ethical development and deployment of AI in content creation by providing a clear mechanism for disclosure, reduce risks of unintentional disinformation or manipulation.
+
+* **Aid Information Ecosystem Health:** By enabling the identification of AIGC, provide a potential tool for researchers and developers working on challenges like combating large-scale misinformation campaigns or curating datasets to mitigate "model collapse".
+
+* **Foster Media Literacy:** Encourage audiences to consider the source and creation process behind the content they consume, promoting more critical engagement with all digital media.
+
+**Non-Goals of the Signum Standard:**
+
+It is equally important to understand what Signum is *not* intended to do:
+
+* **Not a Judgment of Content Quality:** The Signum label indicates the creation process, *not* whether the content is good, bad, accurate, poorly written, or artistically valuable. High-quality content can exist at all Signum levels, as can low-quality content.
+
+* **Not a Determination of Legality or Copyright:** Signum does not assess whether content infringes copyright, is defamatory, constitutes hate speech, or violates any laws or regulations. Provenance labeling does not confer or negate legal rights or responsibilities associated with the content.
+
+* **Not a Comprehensive Ethical Evaluation:** While transparency itself is an ethical goal, Signum does not evaluate the broader ethical implications of the content's *purpose* or *impact*. Content labeled identically could be used for beneficial or harmful ends.
+
+* **Not an AI Detection Mechanism:** Signum is a *disclosure standard* based on self-attestation, platform policies, and potentially verifiable metadata (like C2PA). It does *not* provide a technical method for automatically detecting whether content was AI-generated. Detection tools may be used in *verification workflows*, but are separate from the standard itself.
+
+* **Not a Guarantee of Factual Accuracy:** While some labels indicate human review (AI-HR), no Signum label guarantees the absolute factual correctness of the content. Accuracy remains separate from provenance.
+
+## 2. Core Definitions
+
+* To ensure a common understanding when applying and interpreting the Signum standard, the following terms are defined:
+    
+* **Artificial Intelligence (AI):**
+    For the purpose of this standard, AI refers specifically to computational systems, particularly machine learning models and Large Language Models, capable of generating novel content (such as text, images, audio, video, or code) that mimics human creativity or output, often based on patterns learned from large datasets. This primarily concerns *generative AI* tools.
+
+* **AI-Generated Content (AIGC):**
+    Digital content where the core output, structure, or creative expression was produced by an Artificial Intelligence (AI) system. This may be initiated by human prompts but is not fundamentally shaped or validated by substantive human intervention post-generation (corresponds mainly to Signum levels AI-HP and AI-FA).
+
+* **Compound Content:**
+    A single piece of digital media composed of multiple distinct elements or media types, where those elements may have different origins or creation methods (e.g., a video incorporating human-filmed segments, AI-generated animation, and licensed human-created music). Section 4.2 provides guidance on labeling such content.
+
+* **Content Provenance:**
+    Verifiable information and metadata documenting the origin, creation process, and history of modifications of a piece of digital content. Signum labels are a component of content provenance.
+
+* **Human-Generated Content (HGC):**
+    Digital content primarily created through human intellect, skill, creativity, and effort. Generative AI tools are either not used, or their use is limited to non-substantive assistance that does not dictate the core message, structure, or creative expression (corresponds mainly to Signum levels H and H-AE).
+
+* **Signum Label:**
+    One of the specific category codes defined by this standard (H, H-AE, AI-HR, AI-HP, AI-FA) assigned to a piece of content to declare the assessed level of AI involvement in its creation according to the Signum standard version specified.
+
+* **Substantive Contribution:**
+    An action, input, or modification during the content creation process that fundamentally shapes the core message, creative expression, factual claims, or essential structure of the final output. Actions like correcting spelling/grammar, applying basic image filters, or using standard non-generative software tools are typically considered non-substantive in this context. The distinction between substantive and non-substantive AI contribution is key to differentiating between Signum levels (e.g., H vs H-AE, H-AE vs AI-HR). Further clarification is provided within the category definitions (Section 3).
+
+    * *(Add others as needed)*
+
+## 3. Signum Label Categories
+
+### 3.1 Overview
+* Signum utilise 5 levels of labelling to distinguish content, below are the levels and their purpose.
+
+### 3.2 Level 0: Human (H)
+* **Definition:** Content created primarily through human intellect and effort without substantive use of generative AI tools for the core creation.
+* **Criteria:** Human generated content with no AI assisted tooling.
+* **Examples:** Manually written articles, human-shot photographs, hand-coded software (using non-AI tools).
+* **Clarifications:** Use of spellcheck, grammar tools, basic photo filters, standard programming libraries does not disqualify.
+
+### 3.3 Level 1: Human, AI-Enhanced (H-AE)
+* **Definition:** Human-created content with support from generative AI tools for specific, non-core tasks or components.
+* **Criteria:** Human drives the core idea and execution; AI assists with specific functions.
+* **Examples:** Human-written text using AI for translation/style suggestions, human-developed code using AI autocompletion, human-designed image using AI for background removal/minor changes.
+* **Clarifications:** Clear distinction from AI-HR where AI generates the core output.
+
+### 3.4 Level 2: AI-Assisted, Human-Reviewed (AI-HR)
+* **Definition:** Content was generated by AI, but a human significantly reviewed, edited, fact-checked, modified, and ultimately assumes responsibility for the final output.
+* **Criteria:** Substantial human intervention during and post-generation; final output is a human-validated product.
+* **Examples:** AI-drafted report heavily rewritten and verified by a human expert, AI-generated image significantly altered or composited by a human artist.
+* **Clarifications:** More than just prompt engineering and minor tweaks; requires meaningful human editorial control.
+
+### 3.5 Level 3: AI-Generated, Human-Prompted (AI-HP)
+* **Definition:** Content generated by AI based on human input with minimal or no subsequent human modification or validation.
+* **Criteria:** Output largely reflects the AI's response to the prompt; human role is primarily initiation.
+* **Examples:** Raw text output from an LLM for a given prompt, image generated via text-to-image AI used as-is or with minor cropping.
+* **Clarifications:** Minimal modification is made by a human to this content excluding the initial prompt, minor tweaks to the output are acceptible. If significant editing occurs, it moves to AI-HR.
+
+### 3.6 Level 4: Fully Automated AI (AI-FA)
+* **Definition:** Content generated by AI systems operating programmatically or autonomously without direct human prompting or intervention for the specific output instance.
+* **Criteria:** Generation is triggered by data feeds, schedules, or algorithms rather than specific creative prompts per output.
+* **Examples:** Automated stock market summaries, templated weather reports generated from data feeds, programmatic SEO content.
+* **Clarifications:** Distinction from AI-HP based on the lack of direct human prompting for each piece of content.
+
+## 4. Applying Signum Labels
+
+### 4.1 Principle of Primary Creation Method
+
+To determine your contents signum label, consider the entire workflow and identify the **primary method responsible for the core output**.
+
+**Guidance Questions:**
+
+* **Origin:** Did the core idea, structure, and initial output originate from human effort or from an AI generation based on a prompt?
+* **Output Contribution:** Which process (human work or AI generation) contributed the majority of the final content's essential information or creative elements? Refer to the definition of "Substantive Contribution" (Section 2) and the criteria within each level (Section 3).
+* **Human Role:** What was the primary nature of human interaction with the content creation process?
+    * Was it **minimal or indirect** (e.g., setting up an automated pipeline)? (Consider AI-FA)
+    * Was it primarily **directive/initiating** (e.g., writing prompts, setting parameters for AI generation)? (Consider AI-HP)
+    * Did it involve **substantive editorial review, fact-checking, or modification** of content generated by AI, taking responsibility for the final output? (Consider AI-HR)
+    * Did it involve using AI tools in an **assistive** capacity to enhance primarily human-created work without generating the core substance? (Consider H-AE)
+    * Was the process **reliant only on human effort** for the core creation, without substantive generative AI involvement? (Consider H)
+
+    *(Refer to the detailed definitions and criteria in Section 3 to determine the final label based on the answers to these questions).*
+
+* **Responsibility:** 
+Who takes ultimate responsibility for the final output's integrity? Significant human review and acceptance of responsibility are hallmarks of the AI-HR level, distinguishing it from AI-HP.
+
+The label should reflect the most accurate description of the dominant process driving the final product, guided by the detailed category definitions in Section 3.
+
+
+### 4.2 Labeling Compound Content
+
+Compound Content (defined in Section 2) consists of multiple elements potentially created using different methods (e.g., a video with human footage, AI voiceover, and human-selected music). Assigning a single label requires a consistent approach.
+
+**Recommended Approach (Signum Standard v1.0.0): Highest Watermark Principle**
+
+To prioritize transparency regarding *any* substantive use of generative AI, this standard recommends applying the **Highest Watermark Principle**:
+
+* The entire piece of compound content should be assigned the Signum label corresponding to the **highest level of AI involvement present in any of its substantive components.**
+
+**Examples:**
+
+* A news video primarily featuring a human reporter (H) but including a 15-second AI-generated animated infographic (AI-HP) would be labeled **AI-HP**.
+* A podcast episode with human hosts (H) using AI-generated transition music (AI-HP) would be labeled **AI-HP**.
+* A blog post written by a human (H) but illustrated with an AI-generated image used directly from the AI tool (AI-HP) would be labeled **AI-HP**.
+* A documentary film (H) using AI restoration tools to enhance old footage (non-substantive AI use, likely still H or potentially H-AE depending on the tool's nature) but also including an AI-generated voiceover for a historical figure based on a script (AI-HP) would be labeled **AI-HP**.
+
+**Rationale:** This approach ensures that the presence of substantively AI-generated elements is always disclosed to the user, even if other parts of the content are human-generated.
+
+*(Future versions of this standard may explore component-specific labeling for greater granularity, but v1.0.0 prioritizes a single, maximally transparent label).*
+
+
+### 4.3 Labeling Modified Content
+
+Content is often updated or modified after initial publication. The Signum label associated with the content should be reassessed and potentially updated if modifications significantly alter the balance of human vs. AI contribution or introduce generative AI substantively.
+
+**Guidelines:**
+
+* **Initial Label:** The label should reflect the state of the content at the time of its first labeling or publication under this standard.
+* **Non-Substantive Edits:** Minor human edits (e.g., correcting typos, updating dates, minor formatting changes) generally **do not** require a change in the Signum label.
+* **Substantive Human Overhaul:** If content previously labeled AI-HP or AI-FA is later *substantially* rewritten, edited, and validated by a human to the point where the human assumes responsibility for the output, the label **should be updated** (e.g., to AI-HR, or potentially H-AE if the original AI structure is almost entirely replaced).
+* **Adding Substantive AI Elements:** If generative AI is used to add *new, substantive* sections or components to content previously labeled H or H-AE (e.g., adding an AI-generated chapter to a human-written report, adding AI-generated scenes to a human-shot video), the label **must be updated** according to the Highest Watermark Principle (Section 4.2). It will likely increase to AI-HR, AI-HP, or AI-FA depending on the nature of the added content and review process.
+* **AI Modification of AI Content:** Using AI tools to modify content already labeled AI-HP or AI-FA generally **does not** change the label, unless significant human review and curation are introduced in the process, potentially warranting a change to AI-HR.
+
+**Label History (Best Practice for Enhanced Transparency):**
+
+* When the Signum label for a piece of content is updated due to modification, it is **strongly recommended** that a record of the previous label(s) and associated content version or timestamp be maintained.
+* Where technically feasible, systems displaying the Signum label **should** aim to make this historical label information accessible to the user upon interaction (e.g., via tap/hover on the visual indicator).
+* This provides valuable context about the content's evolution and the changing role of AI in its lifecycle.
+* Implementing robust technical provenance standards, such as C2PA (Content Credentials), inherently supports the storage and retrieval of such historical metadata, making this feature more achievable. Basic implementations (e.g., simple HTML meta tags) may initially only display the current label.
+
+**Recommendation:** Re-evaluate the Signum label whenever content undergoes significant revisions or additions, particularly if generative AI tools are involved in the modification process. Consider associating label updates with content versioning where applicable.
+
+## 5. Technical Specification: Metadata Embedding
+
+### 5.1 Core Metadata Fields
+* (Required) Define `signum:level` (Value MUST be one of H, H-AE, AI-HR, AI-HP, AI-FA).
+* (Required) Define `signum:version` (Value MUST indicate the version of the Signum standard used, e.g., "1.0.0").
+* (Required) Define `signum:timestamp` (ISO 8601 timestamp of labeling).
+* (Optional) `signum:tool` (Identifier for AI tool used, if applicable and desired).
+
+### 5.2 Implementation: HTML Meta Tags
+* Provide `<meta name="signum:level" content="...">` examples.
+
+### 5.3 Implementation: JSON-LD
+* Provide example schema for embedding Signum data within a `<script type="application/ld+json">` block.
+
+### 5.4 Future Considerations (File Metadata, C2PA)
+* Note the intention to align with or embed within standards like C2PA for broader file types (images, video, audio). Placeholder for future specs.
+
+## 6. Visual Representation
+
+### 6.1 Standard Codes
+* List the official short codes: H, H-AE, AI-HR, AI-HP, AI-FA.
+
+### 6.2 Reference to Visual Assets & Style Guide
+* Link to the `/assets` directory containing icons.
+* Link to a separate `STYLE_GUIDE.md` (or section here) detailing usage, color palettes, accessibility notes, etc.
+
+### 6.3 Display Guidelines Summary
+* Brief recommendations on placement, interaction (tap/hover for details), and prioritizing clarity/minimalism.
+
+## 7. Relationship to Other Standards & Policies
+
+### 7.1 C2PA (Content Credentials)
+* Explain how Signum labels can complement C2PA data – potentially by being included *within* C2PA manifests in the future, or used alongside.
+
+### 7.2 Platform-Specific Labeling
+* Acknowledge platform requirements (Meta, Google, etc.) and position Signum as a potential underlying standard they could adopt or map to for consistency.
+
+## 8. Standard Evolution & Governance
+
+### 8.1 Versioning Scheme
+* Specify Semantic Versioning (SemVer) or similar.
+
+### 8.2 Proposal Process
+* Outline how changes or additions to the standard can be proposed, discussed, and adopted (e.g., via GitHub Issues/Pull Requests, community consensus).
+
+## 9. Appendices
+
+### 9.1 Appendix A: Detailed Examples & Edge Cases
+* Provide more complex scenarios and how they should be labeled according to the standard.
+
+### 9.2 Appendix B: Revision History
+* Log of changes made to the standard document across versions.
