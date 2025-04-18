@@ -263,32 +263,212 @@ Content is often updated or modified after initial publication. The Signum label
 
 ## 5. Technical Specification: Metadata Embedding
 
-### 5.1 Core Metadata Fields
-* (Required) Define `signum:level` (Value MUST be one of H, H-AE, AI-HR, AI-HP, AI-FA).
-* (Required) Define `signum:version` (Value MUST indicate the version of the Signum standard used, e.g., "1.0.0").
-* (Required) Define `signum:timestamp` (ISO 8601 timestamp of labeling).
-* (Optional) `signum:tool` (Identifier for AI tool used, if applicable and desired).
+To ensure Signum labels can be consistently applied, read by machines, and optionally displayed by tools or platforms, this section defines recommended methods for embedding the label information as metadata. The primary goal is discoverability and interoperability.
+
+### 5.1 Recommended Metadata Fields
+
+The following fields, using the `signum:` namespace prefix to prevent collisions, are defined:
+
+* **`signum:level` (Mandatory)**
+    * **Description:** The Signum category label assigned to the content.
+    * **Value:** MUST be one of the defined short codes: `H`, `H-AE`, `AI-HR`, `AI-HP`, `AI-FA`.
+    * **Purpose:** Core identifier of the assessed AI involvement level.
+
+* **`signum:version` (Mandatory)**
+    * **Description:** The specific version number of the Signum standard document according to which the `signum:level` was determined.
+    * **Value:** String representing the standard version (e.g., `"1.0.0"`). Using Semantic Versioning (SemVer) is recommended for the standard itself.
+    * **Purpose:** Ensures correct interpretation of the label, as definitions or categories may evolve over time.
+
+* **`signum:timestamp` (Mandatory)**
+    * **Description:** An ISO 8601 formatted timestamp indicating when the label was assigned or when the content in this labeled state was published/created.
+    * **Value:** String (e.g., `"2025-04-18T10:00:00Z"`).
+    * **Purpose:** Provides temporal context for the label assignment and aids in tracking provenance history.
+
+* **`signum:tool` (Optional)**
+    * **Description:** An identifier for the primary generative AI tool(s) or model(s) used in the creation process (relevant for levels H-AE, AI-HR, AI-HP, AI-FA). Disclosure is subject to creator/platform policy.
+    * **Value:** Array (e.g., `["ChatGPT 4.0", "Midjourney v7.1", "Internal Model 'Phoenix'"]`). Could be a name, version, or URI.
+    * **Purpose:** Adds granularity for users or systems interested in the specific AI technology employed.
+
+* **`signum:asserter` (Required)**
+    * **Description:** An identifier (e.g., URI, domain name, organizational ID, Social media handle) for the entity (creator, publisher, platform) making the assertion about the Signum level.
+    * **Value:** String (URI recommended, e.g., `"https://example.com/about#publishing-entity"`, Handles can be used such as:
+    ```
+    handle:<platform_id>:<handle> 
+    "handle:x:@SignumProject", "handle:instagram:creator_xyz
+    ```
+    * **Purpose:** Increases accountability, especially useful when labels are self-declared.
+
+* **`signum:history` (Optional - for Enhanced Transparency)**
+    * **Description:** Provides access to the history of Signum labels for previous versions of the content, as recommended in Section 4.3.
+    * **Value:** Could be a URL pointing to a history record/API endpoint, or potentially an embedded structured data representation (e.g., a JSON array string) defining previous labels, versions, and timestamps. The exact format for embedded history may be defined in future standard versions.
+    * **Purpose:** Supports the display of label evolution upon user interaction.
 
 ### 5.2 Implementation: HTML Meta Tags
-* Provide `<meta name="signum:level" content="...">` examples.
+
+For web content, Signum labels can be embedded using standard `<meta>` tags within the document's `<head>` section. This method is simple and widely compatible.
+
+```html
+<head>
+  <meta name="signum:level" content="AI-HR">
+  <meta name="signum:version" content="1.0.0">
+  <meta name="signum:timestamp" content="2025-04-18T00:10:27Z">
+  <meta name="signum:tool" content="Tool A; Tool B">
+  <meta name="signum:asserter" content="[https://example.com](https://example.com)">
+  <meta name="signum:history" content="[https://example.com/content/article-123/signum-history](https://example.com/content/article-123/signum-history)">
+</head>
+```
 
 ### 5.3 Implementation: JSON-LD
 * Provide example schema for embedding Signum data within a `<script type="application/ld+json">` block.
+```
+<script type="application/ld+json">
+{
+  "@context": "[https://schema.org](https://schema.org)",
+  "@type": "NewsArticle", // Or other relevant Schema.org type
+  "headline": "Example Article Title",
+  // ... other Schema.org properties ...
 
-### 5.4 Future Considerations (File Metadata, C2PA)
-* Note the intention to align with or embed within standards like C2PA for broader file types (images, video, audio). Placeholder for future specs.
+  // Embedding Signum data as a structured object
+  "identifier": [ // Or potentially using usageInfo, creativeWorkStatus, or custom property
+    {
+      "@type": "PropertyValue",
+      "propertyID": "signum:provenance", // Grouping Signum info
+      "value": {
+        "@type": "CreativeWork", // Or a custom type like "SignumProvenanceInfo"
+        "signum:level": "AI-HR",
+        "signum:version": "1.0.0",
+        "signum:timestamp": "2025-04-18T00:10:27Z",
+        "signum:tool": "Tool A; Tool B",
+        "signum:asserter": "[https://example.com](https://example.com)",
+        "signum:history": {
+             "@type": "WebPage", // Link to a page with history
+             "url": "[https://example.com/content/article-123/signum-history](https://example.com/content/article-123/signum-history)"
+         }
+        // Alternatively, history could be an embedded array if desired
+        // "signum:history": [
+        //   { "level": "AI-HP", "version": "1.0.0", "timestamp": "2025-04-17T15:00:00Z" }, ...
+        // ]
+      }
+    }
+  ]
+}
+</script>
+```
 
-## 6. Visual Representation
+### 5.4 Implementation: Markdown Documents (.md)
+
+Applying Signum labels to Markdown content requires conventions that provide both machine-readability for processing systems and clear indicators for human readers.
+
+**Primary Method: YAML Front Matter**
+
+* **Recommendation:** The **preferred method** for embedding Signum metadata in Markdown files is **YAML Front Matter**. This involves including a YAML block enclosed by triple-dashed lines (`---`) at the very beginning of the file.
+* **Rationale:** This is a widely recognized convention for metadata in Markdown, easily parsed by static site generators, documentation tools, and other processors. It cleanly separates metadata from the main content.
+* **Structure:** Define the Signum fields within a `signum:` key. *(Referencing the structure defined in Section 5.1)*.
+* **Example:**
+  ```yaml
+  ---
+  title: Signum Project README
+  date: 2025-04-18
+  signum:
+    level: H-AE          # Mandatory
+    version: "1.0.0"     # Mandatory
+    timestamp: "2025-04-18T18:30:00Z" # Mandatory
+    asserter: "uri:[https://github.com/your-org](https://github.com/your-org)" # Mandatory
+    tool: ["AI Spellchecker Pro"] # Optional
+  ---
+
+
+  Regular Markdown content begins here..
+
+### 5.5 File-Level Metadata Embedding & C2PA Alignment
+
+Ensuring Signum labels persist when content is downloaded, shared, or used offline requires embedding information **within the file's metadata**. This is crucial for media files like images (JPEG, PNG, WEBP, GIF), video (MP4), audio (MP3), and documents (PDF).
+
+The landscape for standardized provenance metadata is evolving rapidly. The Signum standard recommends the following approach for file-level embedding:
+
+* **Primary Recommendation: C2PA (Content Credentials)**
+    * The **strongly recommended** and most robust mechanism for embedding Signum provenance data into supported file types is the **C2PA (Content Credentials)** standard ([https://c2pa.org/](https://c2pa.org/)).
+    * **Rationale:** C2PA is an open technical standard specifically designed to provide tamper-evident, verifiable provenance for digital media. It uses cryptographically signed manifests embedded within files to record details about asset creation and modification history. C2PA has broad industry support (including major software vendors, platforms, camera manufacturers, and news organizations) and is designed to resist metadata stripping.
+    * **Signum & C2PA Integration:** The Signum project aims for full alignment with C2PA. The Signum fields (`signum:level`, `signum:version`, `signum:timestamp`, `signum:asserter`, `signum:tool`, `signum:history`) should be represented as defined **C2PA Assertions** within a C2PA Manifest. *(A companion document or future version of this standard will provide the precise mapping and assertion definitions for C2PA integration).* Tools and platforms implementing Signum are encouraged to adopt C2PA for embedding this data.
+
+* **Alternative/Fallback: XMP (Extensible Metadata Platform)**
+    * Where C2PA implementation is not yet available or feasible within a specific workflow, embedding Signum data using **XMP** is a recognized alternative.
+    * **Rationale:** XMP is a well-established ISO standard for creating, processing, and interchanging structured metadata, widely supported by creative tools (e.g., Adobe products) and digital asset management systems.
+    * **Implementation:** A specific **Signum XMP schema** should be used, utilizing the `signum:` namespace prefix (e.g., `<signum:Level>`, `<signum:Version>`). *(The detailed XMP schema definition will be provided in an appendix or companion document).*
+    * **Limitations:** While structured, standard XMP data does not offer the cryptographic security or tamper-evidence of C2PA and is more susceptible to being stripped by downstream platforms or simpler editing tools.
+
+* **Discouraged Methods:**
+    * The use of unstructured EXIF UserComment fields or the repurposing of unrelated IPTC metadata fields for storing Signum labels is **strongly discouraged**. These methods lack standardization, semantic meaning for this purpose, and are highly unreliable due to frequent stripping and potential misinterpretation.
+
+**Future Considerations:**
+
+* The Signum project will actively work on publishing the formal C2PA assertion definitions and the Signum XMP schema.
+* Guidance for embedding Signum data in specific file formats beyond those currently well-supported by C2PA or XMP (e.g., certain audio or video codecs, specific document formats) may be addressed in future versions or extensions of this standard.
+
+**Recommendation:** Prioritize C2PA for robust, verifiable, and persistent Signum labeling in files. Use the defined Signum XMP schema as a structured fallback where necessary. Avoid non-standardized metadata fields.
+
+While the core of the Signum standard lies in the defined categories (Section 3) and embedded metadata (Section 5), visual indicators provide immediate cues to human users. This section outlines the standard visual elements and provides guidance on their display.
 
 ### 6.1 Standard Codes
-* List the official short codes: H, H-AE, AI-HR, AI-HP, AI-FA.
 
-### 6.2 Reference to Visual Assets & Style Guide
-* Link to the `/assets` directory containing icons.
-* Link to a separate `STYLE_GUIDE.md` (or section here) detailing usage, color palettes, accessibility notes, etc.
+The following short codes are the standardized textual representation for each Signum level:
 
-### 6.3 Display Guidelines Summary
-* Brief recommendations on placement, interaction (tap/hover for details), and prioritizing clarity/minimalism.
+* **H** (Level 0: Human)
+* **H-AE** (Level 1: Human, AI-Enhanced)
+* **AI-HR** (Level 2: AI-Assisted, Human-Reviewed)
+* **AI-HP** (Level 3: AI-Generated, Human-Prompted)
+* **AI-FA** (Level 4: Fully Automated AI)
+
+These codes may be used directly as simple text labels or in conjunction with icons.
+
+### 6.2 Standard Icons
+
+A set of official Signum icons is provided to visually represent each level.
+
+* **Source:** The official icons are available in SVG format within the Signum project repository: [`/assets/icons`](./assets/icons) ( *Note: Adjust link if needed* ).
+* **Design Principles:** Icons are designed to be simple, clearly distinguishable even at small sizes, and visually represent the balance of human and AI involvement.
+* **Icons Overview:** *(Placeholder: Include either textual descriptions or small embedded images/links to the icons here once designed)*
+    * `H`: [Icon representing Human creation]
+    * `H-AE`: [Icon representing Human creation with minor AI assistance]
+    * `AI-HR`: [Icon representing AI creation with significant Human review/control]
+    * `AI-HP`: [Icon representing AI creation prompted by Human]
+    * `AI-FA`: [Icon representing Automated AI creation]
+* **Color:** The standard icons are primarily provided in monochrome (e.g., black or white) to allow flexible application across different backgrounds and designs. A recommended optional color palette may be provided in a separate style guide, but **color alone MUST NOT be used** to convey the Signum level due to accessibility reasons.
+* **License:** The standard Signum icons are provided under the project's open-source license (e.g., MIT License).
+
+### 6.3 Display Recommendations
+
+Consistency and clarity are key when displaying Signum labels visually.
+
+* **Consistency:** Use the official standard icon or code for the corresponding level consistently. Avoid creating custom visuals that could cause confusion.
+* **Placement:**
+    * **Web/Documents:** Recommended placement is in a consistent location, such as the top-right or top-left corner of the main content area, or adjacent to the primary headline, author byline, or publication date.
+    * **Short-Form/Social Media:** Consistent corner overlay (e.g., top-right) or integration into the platform's UI chrome near the username/caption area is recommended.
+    * **Images (if applied visually):** Consistent corner (e.g., bottom-right).
+* **Size:** Indicators should be easily noticeable but not overly intrusive. A default size rendering equivalent to approximately 16px to 24px height for icons is often appropriate, but context may require adjustments. Ensure legibility for text codes.
+* **Interaction (Highly Recommended):**
+    * Visual indicators **SHOULD** be interactive where technically feasible (e.g., on web platforms).
+    * On hover or tap, the indicator **SHOULD** reveal more detailed information. At minimum, this includes the full Signum level name (e.g., "Level 2: AI-Assisted, Human-Reviewed") and the Signum standard version (e.g., "v1.0.0").
+    * Ideally, the interaction **SHOULD** display all available embedded Signum metadata fields (`asserter`, `timestamp`, `tool`, and a link to or representation of `history` if available). Tooltips, pop-overs, or dedicated information panels can be used.
+* **Accessibility:** Visual indicators **MUST** be implemented accessibly:
+    * **Contrast:** Ensure sufficient color contrast between the indicator and its background, adhering to WCAG guidelines.
+    * **Alt Text:** `<img>` elements or CSS background images used for icons MUST include descriptive alternative text (e.g., `alt="Signum Label: AI-Generated, Human-Prompted"`).
+    * **Screen Readers:** Interactive elements must be keyboard-focusable and provide accessible names/descriptions (e.g., via `aria-label` or visually hidden text) that communicate the label information to screen reader users.
+    * **Color Independence:** Do not rely solely on color to differentiate levels. The icon shapes or text codes must be the primary identifiers.
+
+### 6.4 Visuals Driven by Metadata
+
+As outlined in Section 5, the displayed visual indicator should ideally be determined by the authoritative Signum metadata embedded within the content or its associated data structures (e.g., YAML Front Matter, C2PA Manifest, XMP).
+
+* **Recommendation:** Systems processing content with embedded Signum metadata **SHOULD** automatically render the correct standard visual indicator based on the `signum:level` found in the metadata.
+* **Benefit:** This ensures consistency, reduces the chance of manual error, and reinforces the metadata as the single source of truth.
+
+### 6.5 Contextual Considerations
+
+* **Images:** Applying visual indicators directly onto image pixels is optional (Section 5.4). If done, the indicator MUST match the embedded metadata. This is most useful when metadata stripping is likely.
+* **Markdown/Text:** Visual display primarily relies on rendering engines interpreting embedded metadata (e.g., YAML, Section 5.5). A simple text mention is an optional fallback for raw views.
+* **Audio/Video:** Metadata embedding (ideally C2PA) is the most robust method. Visual display depends on the player application or platform UI. Players **SHOULD** be developed to read Signum metadata and display the information (visually or textually) in a consistent manner (e.g., as an overlay during playback, or within the info panel).
+
 
 ## 7. Relationship to Other Standards & Policies
 
