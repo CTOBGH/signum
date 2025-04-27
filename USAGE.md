@@ -17,7 +17,8 @@ For the full technical details, definitions, edge cases, and governance, please 
 ## Understanding the Signum Levels (Quick Reference)
 * Signum has 5 levels of labelling:
 
-    * **L0: Human (H):** You created the core content yourself without significant generative AI help (spellcheck is fine!). *Example: An article you wrote from scratch, a photo you took.*
+    * **L0: Human (H):** You created the core content yourself without significant generative AI help (spellcheck is fine!). 
+    ```Example: An article you wrote from scratch, a photo you took.```
     * **L1: Human, AI-Enhanced (H-AE):** You created the core content, but used AI for minor assistance like grammar checks, style suggestions, simple background removal, or basic code autocompletion. *Example: Your blog post edited by an AI grammar tool, your code using Copilot for suggestions.*
     * **L2: AI-Assisted, Human-Reviewed (AI-HR):** AI generated the initial draft or core components, but you heavily edited, fact-checked, restructured, and took responsibility for the final piece. 
     *Example: An AI-drafted report you significantly rewrote and verified.*
