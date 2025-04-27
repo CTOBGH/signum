@@ -33,7 +33,6 @@ For the full technical details, definitions, edge cases, and governance, please 
 * We've created an example flow which should help you come to the right label:
 
 ![Mermaid diagram showing labelling selection flow](./assets/standards-images/quick-usage-flow.svg)
-<img src="./assets/standards-images/quick-usage-flow.svg&sanitize=true">
 
 * When in doubt, refer to the detailed definitions in [STANDARD.md](STANDARD.md#3-signum-label-categories).*
 
