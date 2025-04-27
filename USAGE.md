@@ -2,10 +2,10 @@
 
 Welcome to Signum! This guide provides quick steps to help you understand and apply Signum content labels to your work. Our goal is to make transparency about AI involvement simple and consistent.
 
-For the full technical details, definitions, edge cases, and governance, please refer to the complete [Signum Standard Document](STANDARD.md).
+For the full technical details, definitions, edge cases, and governance, please refer to the complete [Signum Standard Document](docs/STANDARD.md).
 
-## What is Signum? (The Short Version)
-* Signum is an open standard providing simple labels and visual indiciators to clearly indicate the level of Artificial Intelligence used in creating digital content.
+## What is Signum? (TL;DR)
+* Signum is an open standard providing simple labels and visual indicators to clearly indicate the level of Artificial Intelligence used in creating digital content.
 
 ## Why Label Your Content with Signum?
 * Builds trust and transparency with your audience.
@@ -15,7 +15,8 @@ For the full technical details, definitions, edge cases, and governance, please 
 * May align with emerging platform or regulatory expectations.
 
 ## Understanding the Signum Levels (Quick Reference)
-* Signum has 5 levels of labelling
+* Signum has 5 levels of labelling:
+
     * **L0: Human (H):** You created the core content yourself without significant generative AI help (spellcheck is fine!). *Example: An article you wrote from scratch, a photo you took.*
     * **L1: Human, AI-Enhanced (H-AE):** You created the core content, but used AI for minor assistance like grammar checks, style suggestions, simple background removal, or basic code autocompletion. *Example: Your blog post edited by an AI grammar tool, your code using Copilot for suggestions.*
     * **L2: AI-Assisted, Human-Reviewed (AI-HR):** AI generated the initial draft or core components, but you heavily edited, fact-checked, restructured, and took responsibility for the final piece. 
@@ -40,7 +41,7 @@ For the full technical details, definitions, edge cases, and governance, please 
     * *Add note: When in doubt, refer to the detailed definitions in [STANDARD.md](STANDARD.md#3-signum-label-categories).*
 
 ## How to Apply Your Signum Label (Common Methods)
-* Depending on the content you want to label, will change how add your label in, we've provided some examples below:
+* The method for adding your Signum label depends on the type of content you are labeling. Here are common examples:
 
     ### Markdown Files (YAML Front Matter - Recommended)
     * Add this block at the very top of your `.md` file.
