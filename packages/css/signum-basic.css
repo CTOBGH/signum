@@ -1,0 +1,131 @@
+/* --- Signum Base CSS v1.0.0 --- */
+/* Provides basic styling for Signum visual indicators */
+/* Assumes standard icon SVGs are located relative to this CSS file */
+/* Usage: <span class="signum-label signum-h" data-tooltip="Level 0: Human (v1.0.0)..."></span> */
+
+/*
+ * Copyright 2025 Signum Project Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+ // Start of actual code here...
+
+/* Base style for all Signum labels */
+.signum-label {
+    display: inline-flex; /* Align icon/content nicely */
+    align-items: center;
+    justify-content: center;
+    width: 1.2em; /* Default size - adjust as needed */
+    height: 1.2em; /* Default size - adjust as needed */
+    background-color: currentColor; /* Icon color inherits text color by default */
+    vertical-align: middle; /* Align with surrounding text */
+    margin: 0 0.2em; /* Slight spacing around the label */
+    position: relative; /* Needed for tooltip positioning */
+    cursor: help; /* Indicate more info available on hover */
+  
+    /* --- Icon Styling using CSS Masks --- */
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    
+    /* --- Basic visual cue (optional, can be overridden) --- */
+    /* border: 1px solid #ccc; */
+    /* border-radius: 3px; */
+  }
+  
+  /* --- Define mask images for each level --- */
+  /* --- Replace URLs with correct paths to your SVG assets --- */
+  .signum-h {
+    mask-image: url('../assets/icons/signum-h.svg');
+    -webkit-mask-image: url('../assets/icons/signum-h.svg');
+  }
+  
+  .signum-h-ae {
+    mask-image: url('../assets/icons/signum-h-ae.svg');
+    -webkit-mask-image: url('../assets/icons/signum-h-ae.svg');
+  }
+  
+  .signum-ai-hr {
+    mask-image: url('../assets/icons/signum-ai-hr.svg');
+    -webkit-mask-image: url('../assets/icons/signum-ai-hr.svg');
+  }
+  
+  .signum-ai-hp {
+    mask-image: url('../assets/icons/signum-ai-hp.svg');
+    -webkit-mask-image: url('../assets/icons/signum-ai-hp.svg');
+  }
+  
+  .signum-ai-fa {
+    mask-image: url('../assets/icons/signum-ai-fa.svg');
+    -webkit-mask-image: url('../assets/icons/signum-ai-fa.svg');
+  }
+  
+  /* --- Basic Tooltip Styling on Hover --- */
+  /* --- Relies on JS or server adding a data-tooltip attribute --- */
+  .signum-label[data-tooltip]::before,
+  .signum-label[data-tooltip]::after {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    z-index: 10; /* Ensure tooltip is on top */
+  }
+  
+  .signum-label[data-tooltip]::after {
+    content: attr(data-tooltip);
+    bottom: 125%; /* Position above the element */
+    min-width: 150px; /* Minimum width */
+    max-width: 300px; /* Maximum width */
+    padding: 0.5em 0.8em;
+    background-color: #333; /* Dark background */
+    color: #fff; /* Light text */
+    border-radius: 4px;
+    font-size: 0.85em; /* Slightly smaller font */
+    line-height: 1.4;
+    text-align: left;
+    white-space: pre-wrap; /* Allow line breaks in tooltip */
+  }
+  
+  /* Optional: small triangle pointing to the element */
+  .signum-label[data-tooltip]::before {
+    content: '';
+    bottom: calc(125% - 5px); /* Position just below the main tooltip box */
+    border: 5px solid transparent;
+    border-top-color: #333;
+  }
+  
+  .signum-label[data-tooltip]:hover::before,
+  .signum-label[data-tooltip]:hover::after,
+  .signum-label[data-tooltip]:focus::before, /* Show on focus too */
+  .signum-label[data-tooltip]:focus::after {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* --- Accessibility: Focus Indicator --- */
+  /* --- Ensure labels are focusable if interactive (e.g., add tabindex="0" via JS) --- */
+  .signum-label:focus {
+     outline: none; /* Remove default */
+  }
+  .signum-label:focus-visible {
+     outline: 2px solid Highlight; /* System default focus color */
+     outline: 2px solid -webkit-focus-ring-color; /* Chrome/Safari/Edge */
+     outline-offset: 1px;
+  }
