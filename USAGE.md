@@ -29,10 +29,13 @@ For the full technical details, definitions, edge cases, and governance, please 
         * `Automated weather reports, programmatic market summaries.`
 
 ## How to Choose the Right Label: A Simple Guide
+
 * We've created an example flow which should help you come to the right label:
-    ![Mermaid diagram showing labelling selection flow](./assets/standards-images/quick-usage-flow.svg)
-    <img src="./assets/standards-images/quick-usage-flow.svg">
-    * When in doubt, refer to the detailed definitions in [STANDARD.md](STANDARD.md#3-signum-label-categories).*
+
+![Mermaid diagram showing labelling selection flow](./assets/standards-images/quick-usage-flow.svg)
+<img src="./assets/standards-images/quick-usage-flow.svg">
+
+* When in doubt, refer to the detailed definitions in [STANDARD.md](STANDARD.md#3-signum-label-categories).*
 
 ## How to Apply Your Signum Label (Common Methods)
 * The method for adding your Signum label depends on the type of content you are labeling. Here are common examples:
