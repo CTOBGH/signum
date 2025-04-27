@@ -313,7 +313,7 @@ For web content, Signum labels can be embedded using standard `<meta>` tags with
   <meta name="signum:version" content="1.0.0">
   <meta name="signum:timestamp" content="2025-04-18T00:10:27Z">
   <meta name="signum:tool" content="Tool A; Tool B">
-  <meta name="signum:asserter" content="[https://example.com](https://example.com)">
+  <meta name="signum:asserter" content="https://example.com/content/article-123/signum-history"">
   <meta name="signum:history" content="[https://example.com/content/article-123/signum-history](https://example.com/content/article-123/signum-history)">
 </head>
 ```
@@ -338,11 +338,11 @@ For web content, Signum labels can be embedded using standard `<meta>` tags with
         "signum:level": "AI-HR",
         "signum:version": "1.0.0",
         "signum:timestamp": "2025-04-18T00:10:27Z",
-        "signum:tool": "Tool A; Tool B",
-        "signum:asserter": "[https://example.com](https://example.com)",
+        "signum:tool": ["Tool A", "Tool B"],
+        "signum:asserter": "https://example.com",
         "signum:history": {
              "@type": "WebPage", // Link to a page with history
-             "url": "[https://example.com/content/article-123/signum-history](https://example.com/content/article-123/signum-history)"
+             "url": "https://example.com/content/article-123/signum-history"
          }
         // Alternatively, history could be an embedded array if desired
         // "signum:history": [
@@ -373,7 +373,7 @@ Applying Signum labels to Markdown content requires conventions that provide bot
     level: H-AE          # Mandatory
     version: "1.0.0"     # Mandatory
     timestamp: "2025-04-18T18:30:00Z" # Mandatory
-    asserter: "uri:[https://github.com/your-org](https://github.com/your-org)" # Mandatory
+    asserter: "uri:https://github.com/your-org" # Mandatory
     tool: ["AI Spellchecker Pro"] # Optional
   ---
 
@@ -387,14 +387,11 @@ Ensuring Signum labels persist when content is downloaded, shared, or used offli
 The landscape for standardized provenance metadata is evolving rapidly. The Signum standard recommends the following approach for file-level embedding:
 
 * **Primary Recommendation: C2PA (Content Credentials)**
-    * The **strongly recommended** and most robust mechanism for embedding Signum provenance data into supported file types is the **C2PA (Content Credentials)** standard ([https://c2pa.org/](https://c2pa.org/)).
-    * **Rationale:** C2PA is an open technical standard specifically designed to provide tamper-evident, verifiable provenance for digital media. It uses cryptographically signed manifests embedded within files to record details about asset creation and modification history. C2PA has broad industry support (including major software vendors, platforms, camera manufacturers, and news organizations) and is designed to resist metadata stripping.
-    * **Signum & C2PA Integration:** The Signum project aims for full alignment with C2PA. The Signum fields (`signum:level`, `signum:version`, `signum:timestamp`, `signum:asserter`, `signum:tool`, `signum:history`) should be represented as defined **C2PA Assertions** within a C2PA Manifest. *(A companion document or future version of this standard will provide the precise mapping and assertion definitions for C2PA integration).* Tools and platforms implementing Signum are encouraged to adopt C2PA for embedding this data.
+    * **Signum & C2PA Integration:** The Signum project aims for full alignment with C2PA. The Signum fields (`signum:level`, `signum:version`, `signum:timestamp`, `signum:asserter`, `signum:tool`, `signum:history`) should be represented as defined **C2PA Assertions** within a C2PA Manifest. Tools and platforms implementing Signum are encouraged to adopt C2PA for embedding this data.
 
 * **Alternative/Fallback: XMP (Extensible Metadata Platform)**
     * Where C2PA implementation is not yet available or feasible within a specific workflow, embedding Signum data using **XMP** is a recognized alternative.
-    * **Rationale:** XMP is a well-established ISO standard for creating, processing, and interchanging structured metadata, widely supported by creative tools (e.g., Adobe products) and digital asset management systems.
-    * **Implementation:** A specific **Signum XMP schema** should be used, utilizing the `signum:` namespace prefix (e.g., `<signum:Level>`, `<signum:Version>`). *(The detailed XMP schema definition will be provided in an appendix or companion document).*
+    * **Implementation:** A specific **Signum XMP schema** should be used, utilizing the `signum:` namespace prefix (e.g., `<signum:Level>`, `<signum:Version>`). 
     * **Limitations:** While structured, standard XMP data does not offer the cryptographic security or tamper-evidence of C2PA and is more susceptible to being stripped by downstream platforms or simpler editing tools.
 
 * **Discouraged Methods:**
@@ -407,11 +404,9 @@ The landscape for standardized provenance metadata is evolving rapidly. The Sign
 
 **Recommendation:** Prioritize C2PA for robust, verifiable, and persistent Signum labeling in files. Use the defined Signum XMP schema as a structured fallback where necessary. Avoid non-standardized metadata fields.
 
-While the core of the Signum standard lies in the defined categories (Section 3) and embedded metadata (Section 5), visual indicators provide immediate cues to human users. This section outlines the standard visual elements and provides guidance on their display.
-
 ### 6.1 Standard Codes
 
-The following short codes are the standardized textual representation for each Signum level:
+The following short codes are the standardised textual representation for each Signum level:
 
 * **H** (Level 0: Human)
 * **H-AE** (Level 1: Human, AI-Enhanced)
@@ -425,16 +420,16 @@ These codes may be used directly as simple text labels or in conjunction with ic
 
 A set of official Signum icons is provided to visually represent each level.
 
-* **Source:** The official icons are available in SVG format within the Signum project repository: [`/assets/icons`](./assets/icons) ( *Note: Adjust link if needed* ).
+* **Source:** The official icons are available in SVG format within the Signum project repository: [`/assets/icons`](../assets/icons).
 * **Design Principles:** Icons are designed to be simple, clearly distinguishable even at small sizes, and visually represent the balance of human and AI involvement.
-* **Icons Overview:** *(Placeholder: Include either textual descriptions or small embedded images/links to the icons here once designed)*
+* **Icons Overview:** 
     * `H`: [Icon representing Human creation]
     * `H-AE`: [Icon representing Human creation with minor AI assistance]
     * `AI-HR`: [Icon representing AI creation with significant Human review/control]
     * `AI-HP`: [Icon representing AI creation prompted by Human]
     * `AI-FA`: [Icon representing Automated AI creation]
 * **Color:** The standard icons are primarily provided in monochrome (e.g., black or white) to allow flexible application across different backgrounds and designs. A recommended optional color palette may be provided in a separate style guide, but **color alone MUST NOT be used** to convey the Signum level due to accessibility reasons.
-* **License:** The standard Signum icons are provided under the project's open-source license (e.g., MIT License).
+* **License:** The standard Signum icons are provided under the project's open-source license.
 
 ### 6.3 Display Recommendations
 
@@ -442,14 +437,21 @@ Consistency and clarity are key when displaying Signum labels visually.
 
 * **Consistency:** Use the official standard icon or code for the corresponding level consistently. Avoid creating custom visuals that could cause confusion.
 * **Placement:**
-    * **Web/Documents:** Recommended placement is in a consistent location, such as the top-right or top-left corner of the main content area, or adjacent to the primary headline, author byline, or publication date.
+    * **Web/Documents:** Recommended placement is in a consistent location, such as the top-right or top-left corner of the main content area.
     * **Short-Form/Social Media:** Consistent corner overlay (e.g., top-right) or integration into the platform's UI chrome near the username/caption area is recommended.
-    * **Images (if applied visually):** Consistent corner (e.g., bottom-right).
+    * **Visual Application:** Apply the relevant image in a consistent corner, this can be moved to avoid distracting the user from the content (e.g., bottom-right, bottom-left, top-right,top-left).
 * **Size:** Indicators should be easily noticeable but not overly intrusive. A default size rendering equivalent to approximately 16px to 24px height for icons is often appropriate, but context may require adjustments. Ensure legibility for text codes.
+
+* **Opacity & Intrusion:**
+    * To maintain visual clarity and ensure recognizability, Signum indicators **SHOULD** generally be displayed at full opacity (100%).
+    * Adjusting the transparency (opacity) of labels is **STRONGLY DISCOURAGED** as it significantly reduces contrast, potentially rendering the label inaccessible to users with visual impairments (violating accessibility guidelines) and making it harder for all users to notice.
+    * Minimal intrusion should be achieved through careful **placement**, appropriate **sizing**, and potentially using subtle official **style variants** (e.g., outline icons, if provided) rather than reducing opacity. Integrating labels into the surrounding **Platform UI** is another effective way to minimize direct overlay on content.
+
 * **Interaction (Highly Recommended):**
     * Visual indicators **SHOULD** be interactive where technically feasible (e.g., on web platforms).
-    * On hover or tap, the indicator **SHOULD** reveal more detailed information. At minimum, this includes the full Signum level name (e.g., "Level 2: AI-Assisted, Human-Reviewed") and the Signum standard version (e.g., "v1.0.0").
+    * On hover or tap, the indicator **SHOULD** reveal more detailed information. At minimum, this includes the full Signum level name (e.g., "L2:AI-Assisted, Human-Reviewed") and the Signum standard version (e.g., "v1.0.0").
     * Ideally, the interaction **SHOULD** display all available embedded Signum metadata fields (`asserter`, `timestamp`, `tool`, and a link to or representation of `history` if available). Tooltips, pop-overs, or dedicated information panels can be used.
+    
 * **Accessibility:** Visual indicators **MUST** be implemented accessibly:
     * **Contrast:** Ensure sufficient color contrast between the indicator and its background, adhering to WCAG guidelines.
     * **Alt Text:** `<img>` elements or CSS background images used for icons MUST include descriptive alternative text (e.g., `alt="Signum Label: AI-Generated, Human-Prompted"`).
@@ -465,31 +467,84 @@ As outlined in Section 5, the displayed visual indicator should ideally be deter
 
 ### 6.5 Contextual Considerations
 
-* **Images:** Applying visual indicators directly onto image pixels is optional (Section 5.4). If done, the indicator MUST match the embedded metadata. This is most useful when metadata stripping is likely.
-* **Markdown/Text:** Visual display primarily relies on rendering engines interpreting embedded metadata (e.g., YAML, Section 5.5). A simple text mention is an optional fallback for raw views.
+* **Images:** Applying visual indicators directly onto image pixels is optional (Section 5.1). If done, the indicator MUST match the embedded metadata. This is most useful when metadata stripping is likely.
+* **Markdown/Text:** Visual display primarily relies on rendering engines interpreting embedded metadata (e.g., YAML, Section 5.4). A simple text mention is an optional fallback for raw views.
 * **Audio/Video:** Metadata embedding (ideally C2PA) is the most robust method. Visual display depends on the player application or platform UI. Players **SHOULD** be developed to read Signum metadata and display the information (visually or textually) in a consistent manner (e.g., as an overlay during playback, or within the info panel).
 
 
 ## 7. Relationship to Other Standards & Policies
 
-### 7.1 C2PA (Content Credentials)
-* Explain how Signum labels can complement C2PA data – potentially by being included *within* C2PA manifests in the future, or used alongside.
+It is important to coexist with, complement, and integrate with other relevant technical standards, platform policies, and regulatory requirements where possible.
 
-### 7.2 Platform-Specific Labeling
-* Acknowledge platform requirements (Meta, Google, etc.) and position Signum as a potential underlying standard they could adopt or map to for consistency.
+### 7.1 C2PA (Content Credentials)
+
+* **Relationship:** Signum and the C2PA standard ([https://c2pa.org/](https://c2pa.org/)) are highly complementary. C2PA provides a secure technical framework for embedding verifiable, tamper-evident provenance data (Content Credentials) within digital assets. Signum provides a specific semantic layer focused on categorising the *level of AI involvement* – information that can be included *within* C2PA manifests.
+* **Integration Goal:** As stated in Section 5.5, the Signum project's primary goal for robust file-level provenance is to define the Signum metadata fields (`signum:level`, `signum:version`, etc.) as standard C2PA Assertions. This would allow Signum labels to benefit from C2PA's security, verifiability, and history tracking capabilities.
+* **Benefits:** Integrating Signum with C2PA provides end-users and systems with a powerful combination: knowing the level of AI involvement (Signum) with high confidence in the integrity and origin of that claim (C2PA).
+* **Status (as of May 2025):** C2PA adoption by major platforms and tools is growing. Formal definition of Signum fields as C2PA assertions is planned work for the Signum project.
+
+### 7.2 Platform-Specific Labeling Policies
+
+* **Context:** Major online platforms (e.g., Meta platforms, Google/YouTube, TikTok) have implemented their own policies and user interface elements for disclosing the use of AI in content uploaded to their services. These often involve creator self-declaration through platform tools.
+* **Relationship:** Signum offers a more granular (5 levels vs. often binary platform labels) and potentially interoperable standard. Platform labels are currently specific to each platform's ecosystem.
+* **Guidance for Creators:** Creators publishing content **must** comply with the specific AI disclosure requirements and labeling tools provided by each platform they use, independent of their use of Signum labels. Embedding Signum metadata and visual labels provides richer, potentially more persistent information that travels with the content, complementing platform-specific disclosures.
+
+### 7.3 Regulatory Frameworks
+
+* **Context:** Governments and regulatory bodies worldwide are increasingly addressing Artificial Intelligence, including requirements for transparency and disclosure. Key examples include the EU AI Act, along with ongoing developments in the US (federal and state levels), UK, China, and elsewhere.
+* **Relationship:** The Signum standard is **not a law or regulation** itself. However, it is designed to **help creators and platforms meet the transparency objectives** found in regulations like the EU AI Act.
+* **Alignment:** Applying an appropriate Signum label (particularly AI-HR, AI-HP, or AI-FA) provides a clear, standardized method for disclosing that content was generated or significantly manipulated by AI, which aligns with the intent of many regulatory transparency requirements, especially concerning deepfakes or potentially misleading AI generated content.
+* **Disclaimer:** Compliance with specific legal or regulatory obligations requires careful reading of the applicable laws. Signum provides transparency about the creation *process*, while regulations may have specific triggers based on content *type*, *risk level*, or *potential impact* (e.g., 'high-risk AI', 'biometric identification', 'political advertising', 'deepfake'). Applying a Signum label is a helpful transparency measure but does not automatically guarantee full compliance with all aspects of all relevant laws. Users should consult legal counsel for advice on specific regulatory compliance needs.
 
 ## 8. Standard Evolution & Governance
 
+The Signum standard is intended to be an evolving standard that changes the fluctuating needs of AI content generation and its users. This section outlines the process for managing versions and incorporating changes.
+
 ### 8.1 Versioning Scheme
-* Specify Semantic Versioning (SemVer) or similar.
+
+* **Standard:** The Signum standard adheres to **Semantic Versioning 2.0.0** ([https://semver.org/](https://semver.org/)). Version numbers are assigned in the format `MAJOR.MINOR.PATCH`.
+    * **MAJOR** version changes indicate incompatible changes to the standard (e.g., removing a level, fundamentally altering category definitions in a non-backward-compatible way).
+    * **MINOR** version changes introduce new functionality or categories in a backward-compatible manner (e.g., adding a new optional metadata field, adding a new level without invalidating old ones) or make significant clarifications that remain backward-compatible.
+    * **PATCH** version changes include backward-compatible bug fixes, typo corrections, or minor clarifications to the documentation that do not change the semantic meaning of the standard.
+* **Current Version:** The version identifier at the top of this document indicates the current official version of the standard. Implementers should reference this version (e.g., using the `signum:version` metadata field) when applying labels.
 
 ### 8.2 Proposal Process
-* Outline how changes or additions to the standard can be proposed, discussed, and adopted (e.g., via GitHub Issues/Pull Requests, community consensus).
+
+Changes, improvements, and additions to the Signum standard are welcomed and encouraged from the community. The process for proposing and adopting changes is managed openly through the official Signum project repository on GitHub ([*Link to GitHub Repo Here*]).
+
+1.  **Suggestion/Discussion:** Propose changes or raise points for discussion by creating a new **Issue** in the GitHub repository. Please use appropriate labels if available (e.g., `standard-proposal`, `clarification`, `enhancement`). Clearly describe the proposed change and the rationale behind it.
+2.  **Community Feedback:** Proposals will be discussed publicly within the Issue thread. Maintainers and community members will review, provide feedback, discuss implications, and work towards a consensus.
+3.  **Formal Proposal (if needed):** For substantial changes (e.g., adding/removing levels, significant changes to definitions), the proposer may be asked to submit a more detailed proposal document via a **Pull Request** against the repository.
+4.  **Decision:** Decisions on accepting or rejecting proposals will be made by the project maintainers (see Section 8.3) based on factors including community consensus, alignment with Signum's core goals (Section 1.3), technical feasibility, potential impact on existing implementations, and overall benefit to the standard's clarity and utility. The rationale for decisions will be documented in the relevant Issue or Pull Request.
+5.  **Implementation:** Accepted changes will be incorporated into the standard document and any associated code/assets via reviewed Pull Requests.
+6.  **New Release:** Following the incorporation of changes, a new version of the standard will be tagged and released according to the Versioning Scheme (Section 8.1), accompanied by release notes summarizing the changes.
+
+### 8.3 Governance Model 
+
+* **Maintenance:** As of April 2025, the Signum standard is maintained by its initial proponents ([*BOTC of Counterplay - Founder of Signum*]).
+* **Decision Making:** While community consensus is highly valued (see Section 8.2), final decisions on adopting changes currently rest with the maintainers, guided by the project's stated goals and principles.
+* **Future Evolution:** This governance model may evolve as the project and its community mature. Options such as establishing a broader steering committee, formalising community voting procedures, and affiliating with a neutral foundation may be considered in the future to ensure long-term sustainability and community stewardship. Contributions to shaping this future governance are welcome.
+
 
 ## 9. Appendices
 
-### 9.1 Appendix A: Detailed Examples & Edge Cases
-* Provide more complex scenarios and how they should be labeled according to the standard.
+This section contains supplementary materials, including detailed examples to aid in the understanding and application of the Signum standard.
 
-### 9.2 Appendix B: Revision History
-* Log of changes made to the standard document across versions.
+### 9.1 Appendix A: Detailed Examples & Edge Cases
+
+**Purpose:** This appendix provides concrete examples and discusses edge cases to illustrate the practical application of the Signum labeling categories (Section 3) and application principles (Section 4). It aims to clarify potential ambiguities and promote consistent interpretation of the standard.
+
+**Content:** *(This section will be populated over time with specific scenarios as the standard is developed and feedback is received. Examples will include:)*
+
+* **Illustrative Workflow Scenarios:** Step-by-step descriptions of different content creation workflows (e.g., writing an article, creating a video, developing software) and the resulting Signum label based on the tools and processes used.
+* **Compound Content Breakdowns:** Detailed examples of labeling multimedia content (videos, interactive articles) using the "Highest Watermark Principle" (Section 4.2), showing how different components contribute to the final label.
+* **Distinguishing Between Levels:** Scenarios specifically designed to highlight the key differences and decision points between adjacent Signum levels (e.g., H vs. H-AE, AI-HR vs. AI-HP).
+* **Tool-Specific Considerations (Illustrative):** Hypothetical examples discussing how the use of common AI tools (e.g., AI writing assistants, code completion tools, image generators, voice synthesizers) might influence label assignment depending on the *nature and substance* of their contribution. *(Note: This will not endorse or evaluate specific tools but illustrate principles based on tool capabilities).*
+* **Addressing Edge Cases:** Discussion of less common or ambiguous scenarios, such as:
+    * AI-powered translation of primarily human-written text.
+    * Use of AI for significant data analysis presented in human-written reports.
+    * AI-based upscaling or restoration of images/video.
+    * Content generated via fine-tuned models based on specific datasets.
+    * Interactive content where user input influences AI generation.
+
+*(Community contributions of relevant examples and edge cases for discussion are encouraged via the process outlined in Section 8.2).*
