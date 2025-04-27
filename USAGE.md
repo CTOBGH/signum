@@ -30,19 +30,9 @@ For the full technical details, definitions, edge cases, and governance, please 
 
 ## How to Choose the Right Label: A Simple Guide
 * We've created an example flow which should help you come to the right label:
-    1.  **Did you use generative AI substantively to create the core content?**
-        * No -> **Label H**
-        * Yes -> Go to Q2
-    2.  **Was the AI's role primarily minor assistance on your own core work?** (e.g., grammar, style suggestions, minor image edits)
-        * Yes -> **Label H-AE**
-        * No (AI generated the core substance) -> Go to Q3
-    3.  **Did you significantly review, edit, fact-check, and take responsibility for the AI-generated output?**
-        * Yes -> **Label AI-HR**
-        * No (Used largely as-is from AI) -> Go to Q4
-    4.  **Did you directly prompt the AI for this specific piece of content?**
-        * Yes -> **Label AI-HP**
-        * No (Generated automatically/programmatically) -> **Label AI-FA**
-    * *Add note: When in doubt, refer to the detailed definitions in [STANDARD.md](STANDARD.md#3-signum-label-categories).*
+    ![Mermaid diagram showing labelling selection flow](./assets/standards-images/quick-usage-flow.svg)
+    <img src="./assets/standards-images/quick-usage-flow.svg">
+    * When in doubt, refer to the detailed definitions in [STANDARD.md](STANDARD.md#3-signum-label-categories).*
 
 ## How to Apply Your Signum Label (Common Methods)
 * The method for adding your Signum label depends on the type of content you are labeling. Here are common examples:
