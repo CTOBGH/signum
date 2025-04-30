@@ -68,7 +68,8 @@ For the full technical details, definitions, edge cases, and governance, please 
     > * **(Optional) Tool(s):** [Tool Name(s) or "N/A"]
     > * **(Optional) History:** [Link or reference or "N/A"]
     > * *Note:* [Optional: Brief note clarifying the creation process for this specific content]
-
+    ```
+    
     ### Web Pages (HTML Meta Tags)
     * Add these tags inside the `<head>` section of your HTML file.
     * Example:
