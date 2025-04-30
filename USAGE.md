@@ -2,7 +2,7 @@
 
 Welcome to Signum! This guide provides quick steps to help you understand and apply Signum content labels to your work. Our goal is to make transparency about AI involvement simple and consistent.
 
-For the full technical details, definitions, edge cases, and governance, please refer to the complete [Signum Standard Document](docs/STANDARD.md).
+For the full technical details, definitions, edge cases, and governance, please refer to the complete [Signum Standard Document](STANDARD.md).
 
 ## What is Signum? (TL;DR)
 * Signum is an open standard providing simple labels and visual indicators to clearly indicate the level of Artificial Intelligence used in creating digital content.
@@ -69,7 +69,7 @@ For the full technical details, definitions, edge cases, and governance, please 
     > * **(Optional) History:** [Link or reference or "N/A"]
     > * *Note:* [Optional: Brief note clarifying the creation process for this specific content]
     ```
-    
+
     ### Web Pages (HTML Meta Tags)
     * Add these tags inside the `<head>` section of your HTML file.
     * Example:
