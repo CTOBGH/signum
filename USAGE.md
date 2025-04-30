@@ -39,7 +39,7 @@ For the full technical details, definitions, edge cases, and governance, please 
 ## How to Apply Your Signum Label (Common Methods)
 * The method for adding your Signum label depends on the type of content you are labeling. Here are common examples:
 
-    ### Markdown Files (YAML Front Matter - Recommended)
+    ### Markdown Files (YAML Front Matter)
     * Add this block at the very top of your `.md` file.
         ```yaml
         ---
@@ -52,10 +52,22 @@ For the full technical details, definitions, edge cases, and governance, please 
         ```
     * `asserter` Is the individual or organisation responsible for the content.
 
-    ### Markdown Files (Visible Text Statement)
-    * If YAML isn't suitable, add this near the top of your text.
-    * Example:
-        `Signum Label (v1.0.0): H-AE. Asserted by [Your Name/Site/Handle] on YYYY-MM-DD.`
+    ### Markdown Files  Visible Display (Human-Readable - Recommended)**
+     * **Recommendation:** To ensure the Signum label is clearly visible to human readers within the rendered Markdown document (even if the YAML Front Matter isn't displayed), it is **highly recommended** to include the following visible block near the top of the document (e.g., immediately after the main title or abstract):
+    * **Format:** This format uses an HTML `<img>` tag to display the correct Signum icon with controlled size, followed by a Markdown blockquote (`>`) containing the key label details.
+    * **Rationale:** This approach ensures reliable icon display across different Markdown renderers (using HTML for size control) while using standard Markdown for the text details, rendering well on platforms like GitHub.
+    * **Example Template:**
+
+    ```markdown
+    <img src="[Path/To/Your/Icon.svg]" alt="Signum Level [LEVEL_CODE] Icon" title="Signum: [Full Level Name] (Level [LEVEL_CODE])" width="32" height="32" style="margin-bottom: 0.5em;"> 
+
+    > **Signum Label Details (v[VERSION])**
+    > * **Level:** [LEVEL_CODE] ([Full Level Name])
+    > * **Timestamp:** [ISO 8601 Timestamp] 
+    > * **Asserter:** [Asserter Identifier]
+    > * **(Optional) Tool(s):** [Tool Name(s) or "N/A"]
+    > * **(Optional) History:** [Link or reference or "N/A"]
+    > * *Note:* [Optional: Brief note clarifying the creation process for this specific content]
 
     ### Web Pages (HTML Meta Tags)
     * Add these tags inside the `<head>` section of your HTML file.
