@@ -72,7 +72,7 @@ For the full technical details, definitions, edge cases, and governance, please 
     * You can also leverage more advanced methods like JSON-lD, C2PA, and XMP for more complex needs, please read [STANDARD.md Section 5](STANDARD.md#5-technical-specification-metadata-embedding) for more details.
 
 ## Visual Labels (Icons)
-* Where possible leverage visual labels for your chosen label ([Link to Assets](./assets/icons)).
+* Where possible leverage visual labels for your chosen label ([Visuals](./assets/visuals)).
 * Please use the official icons, and follow our best practices where possible:
     * **Opacity** Avoid lowering the opacity where possible.
     * **Positioning** Try to position your icon in a consistent manner, we recommend picking a corner of your content and placing the icon there.

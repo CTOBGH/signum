@@ -29,7 +29,7 @@ There are many ways to contribute to Signum's development and adoption:
     * [README.md](README.md) (Project overview and vision)
     * [STANDARD.md](STANDARD.md) (The definitive specification)
     * [USAGE.md](USAGE.md) (Practical guide for applying labels)
-2.  **Check Existing Issues & Discussions:** Look through the [GitHub Issues][Link to Issues] and [GitHub Discussions][Link to Discussions] (if enabled) to see if your bug report or idea has already been submitted or discussed.
+2.  **Check Existing Issues:** Look through the [GitHub Issues](https://github.com/CTOBGH/signum/issues) to see if your bug report or idea has already been submitted or discussed.
 3.  **Find Your Niche:** Decide how you'd like to contribute based on the list above.
 
 ## Contribution Workflow
@@ -38,7 +38,7 @@ Please follow these workflows for different types of contributions:
 
 ### Reporting Bugs
 
-1.  **Search:** Check the [GitHub Issues][Link to Issues] to ensure the bug hasn't already been reported.
+1.  **Search:** Check the [GitHub Issues](https://github.com/CTOBGH/signum/issues) to ensure the bug hasn't already been reported.
 2.  **Open Issue:** If it's a new bug, open a new issue. Use the "Bug Report" template if available.
 3.  **Details:** Provide as much detail as possible:
     * A clear and descriptive title.
@@ -49,7 +49,7 @@ Please follow these workflows for different types of contributions:
 
 ### Suggesting Enhancements or Standard Changes
 
-1.  **Search:** Check [GitHub Issues][Link to Issues] and [Discussions][Link to Discussions] for existing related suggestions.
+1.  **Search:** Check [GitHub Issues](https://github.com/CTOBGH/signum/issues) for existing related suggestions.
 2.  **Open Issue:** If your idea is new, open a new issue. Use the "Feature Request" or "Standard Proposal" template if available.
 3.  **Explain:** Clearly describe your suggestion:
     * A clear and descriptive title.
@@ -65,7 +65,7 @@ We actively welcome Pull Requests (PRs)!
 1.  **Issue Association:** Ideally, ensure there's an associated Issue discussing the bug fix or feature before starting work on a PR, especially for larger changes. You can create one if needed. Link your PR to the relevant issue (e.g., "Fixes #123").
 2.  **Fork & Clone:** Fork the main Signum repository to your own GitHub account, then clone your fork locally.
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/signum.git](https://github.com/YOUR_USERNAME/signum.git)
+    git clone https://github.com/YOUR_USERNAME/signum.git
     cd signum
     ```
 3.  **Create Branch:** Create a new branch for your changes, based off the `main` branch. Use a descriptive name (e.g., `feature/add-jsonld-parser`, `fix/readme-typo`, `docs/clarify-level-h`).
@@ -90,7 +90,6 @@ We actively welcome Pull Requests (PRs)!
 
 ## Communication Channels
 
-* **[GitHub Issues][Link to Issues]:** Best for specific bug reports and feature/standard proposals.
-* **[GitHub Discussions][Link to Discussions]:** Best for general questions, broader ideas, community chat, and showcasing uses of Signum (Use the "Show and tell" category!).
+* **[GitHub Issues](https://github.com/CTOBGH/signum/issues):** Best for specific bug reports and feature/standard proposals.
 
 Thank you again for contributing to making the digital world more transparent with Signum!
