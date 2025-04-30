@@ -9,13 +9,27 @@
    id="Capa_1"
    viewBox="0 0 480.647 480.647"
    xml:space="preserve"
-   sodipodi:docname="FA-Smol.svg"
+   sodipodi:docname="FA.svg"
    inkscape:version="1.4 (86a8ad7, 2024-10-11)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs4" /><sodipodi:namedview
+   id="defs4"><linearGradient
+     id="swatch1"
+     inkscape:swatch="solid"><stop
+       style="stop-color:#ffffff;stop-opacity:1;"
+       offset="0"
+       id="stop1" /></linearGradient><linearGradient
+     inkscape:collect="always"
+     xlink:href="#swatch1"
+     id="linearGradient1"
+     x1="24"
+     y1="116"
+     x2="232"
+     y2="116"
+     gradientUnits="userSpaceOnUse" /></defs><sodipodi:namedview
    id="namedview4"
    pagecolor="#ffffff"
    bordercolor="#000000"
@@ -28,11 +42,11 @@
    showguides="true"
    inkscape:zoom="0.82643105"
    inkscape:cx="233.5343"
-   inkscape:cy="337.59622"
+   inkscape:cy="336.3862"
    inkscape:window-width="1909"
    inkscape:window-height="1160"
    inkscape:window-x="596"
-   inkscape:window-y="33"
+   inkscape:window-y="0"
    inkscape:window-maximized="0"
    inkscape:current-layer="Capa_1"><sodipodi:guide
      position="215.91662,243.64761"
@@ -49,8 +63,9 @@
      inkscape:locked="false" /></sodipodi:namedview>
 
 <g
-   style="fill:#000000"
+   style="fill:#000000;stroke:url(#linearGradient1)"
    id="g8"
    transform="matrix(1.0831889,0,0,1.0430707,101.06636,120.8506)"><path
      d="M 200,48 H 136 V 16 a 8,8 0 0 0 -16,0 V 48 H 56 A 32.03635,32.03635 0 0 0 24,80 v 112 a 32.03635,32.03635 0 0 0 32,32 h 144 a 32.03635,32.03635 0 0 0 32,-32 V 80 A 32.03635,32.03635 0 0 0 200,48 Z M 72,108 a 12,12 0 1 1 12,12 12,12 0 0 1 -12,-12 z m 28,76 h -8 a 16,16 0 0 1 0,-32 h 8 z m 40,0 h -24 v -32 h 24 z m 24,0 h -8 v -32 h 8 a 16,16 0 0 1 0,32 z m 8,-64 a 12,12 0 1 1 12,-12 12,12 0 0 1 -12,12 z"
-     id="path1-8" /></g></svg>
+     id="path1-8"
+     style="stroke:url(#linearGradient1)" /></g></svg>
